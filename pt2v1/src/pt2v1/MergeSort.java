@@ -49,6 +49,41 @@ public class MergeSort {
         }
     }
 
+    public static void investMergeSort(int[] a, int left, int right, int[] temp) {
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            investMergeSort(a, left, mid, temp);
+            investMergeSort(a, mid + 1, right, temp);
+            investMerge(a, left, mid, right, temp);
+        }
+    }
+
+    public static void investMerge(int[] a, int left, int mid, int right, int[] temp) {
+        int i = left;
+        int j = mid + 1;
+        int k = left;
+
+        while (i <= mid && j <= right) {
+            if (a[i] >= a[j]) {
+                temp[k++] = a[i++];
+            } else {
+                temp[k++] = a[j++];
+            }
+        }
+
+        while (i <= mid) {
+            temp[k++] = a[i++];
+        }
+
+        while (j <= right) {
+            temp[k++] = a[j++];
+        }
+
+        for (int p = left; p <= right; p++) {
+            a[p] = temp[p];
+        }
+    }
+
     public static void main(String[] args) {
         int[] a = {3, 1, 4, 5, 2};
         int[] temp = new int[a.length];
@@ -56,7 +91,12 @@ public class MergeSort {
         for (int x : a) {
             System.out.print(x + " ");
         }
-        
+        System.out.println();
+
+        investMergeSort(a, 0, a.length - 1, temp);
+        for (int y : temp) {
+            System.out.print(y + " ");
+        }
         System.out.println();
     }
 }

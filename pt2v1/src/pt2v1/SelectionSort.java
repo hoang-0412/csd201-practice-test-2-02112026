@@ -22,12 +22,35 @@ public class SelectionSort {
             a[minIndex] = temp;
         }
     }
+    
+    public static void investSelectionSort(int[] a) {
+        int n = a.length;
+        for (int i = 0; i < n - 1; i++) {
+            int maxIndex = i;
+
+            for (int j = i + 1; j < n; j++) {
+                if (a[j] > a[maxIndex]) {
+                    maxIndex = j;
+                }
+            }
+
+            int temp = a[i];
+            a[i] = a[maxIndex];
+            a[maxIndex] = temp;
+        }
+    }
 
     public static void main(String[] args) {
         int[] a = {3, 1, 4, 5, 2};
         selectionSort(a);
         for (int item : a) {
             System.out.print(item + " ");
+        }
+        System.out.println();
+        
+        investSelectionSort(a);
+        for (int y : a) {
+            System.out.print(y + " ");
         }
         System.out.println();
     }

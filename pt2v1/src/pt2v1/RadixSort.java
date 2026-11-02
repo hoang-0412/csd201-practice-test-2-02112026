@@ -54,6 +54,38 @@ public class RadixSort {
         }
     }
 
+    static void investCountingSort(int[] a, int exp) {
+        int n = a.length;
+        int[] output = new int[n];
+        int[] count = new int[10];
+
+        for (int i = 0; i < n; i++) {
+            int digit = (a[i] / exp) % 10;
+            count[digit]++;
+        }
+
+        for (int i = 8; i >= 0; i--) {
+            count[i] += count[i + 1];
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            int digit = (a[i] / exp) % 10;
+            output[count[digit] - 1] = a[i];
+            count[digit]--;
+        }
+
+        for (int i = 0; i < n; i++) {
+            a[i] = output[i];
+        }
+    }
+
+    static void investRadixSort(int[] a) {
+        int max = getMax(a);
+        for (int exp = 1; max / exp > 0; exp *= 10) {
+            investCountingSort(a, exp);
+        }
+    }
+
     public static void main(String[] args) {
         // Mảng mẫu theo Ảnh 20 (hoặc {170, 45, 75, 90, 802, 24, 2, 66} theo Ảnh 19)
         int[] a = {189, 43, 78, 91, 934, 37, 8, 58};
@@ -63,7 +95,13 @@ public class RadixSort {
         for (int x : a) {
             System.out.print(x + " ");
         }
-        
+        System.out.println();
+
+        investRadixSort(a);
+        System.out.println("Mang sau khi sap xep:");
+        for (int y : a) {
+            System.out.print(y + " ");
+        }
         System.out.println();
     }
 }
